@@ -6,7 +6,10 @@ from flask import Flask
 import threading
 
 ZKILL_WS_URL = "wss://zkillboard.com/websocket/"
-WATCHED_CORPS = set(map(int, os.environ.get("WATCHED_CORP_IDS", "").split(",")))
+WATCHED_CORPS_RAW = os.environ.get("WATCHED_CORP_IDS", "")
+WATCHED_CORPS = set()
+if WATCHED_CORPS_RAW.strip():
+    WATCHED_CORPS = set(map(int, WATCHED_CORPS_RAW.split(",")))
 
 app = Flask(__name__)
 
