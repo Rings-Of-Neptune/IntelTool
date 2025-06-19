@@ -5,8 +5,6 @@ import json
 import websockets
 import os
 from datetime import datetime
-from flask import Flask
-import threading
 
 # Load config from environment variables
 ZKILL_WS_URL = "wss://zkillboard.com/websocket/"
@@ -53,6 +51,9 @@ if __name__ == "__main__":
     print("Starting zKillboard listener service...")
     asyncio.run(listen_to_zkill())
 
+from flask import Flask
+import threading
+
 app = Flask(__name__)
 
 @app.route('/')
@@ -66,3 +67,4 @@ if __name__ == "__main__":
     print("Starting listener + web server...")
     threading.Thread(target=run_websocket_listener, daemon=True).start()
     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))
+
